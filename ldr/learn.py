@@ -69,11 +69,11 @@ def generate_data(sample_count):
         x[i, :, :, 0] = generate_diffraction_rings(
             center_x=center_x, center_y=center_y, radius_list=radius_list
         )
-        y[i, 0] = center_x
-        y[i, 1] = center_y
+        y[i, 0] = center_x / 100
+        y[i, 1] = center_y / 100
         ##y[i, 2:len(radius_list)+2] = radius_list
-        y[i, 2] = radius_list[0]
-        y[i, 3] = radius_list[-1]
+        y[i, 2] = radius_list[0] / 100
+        y[i, 3] = radius_list[-1] / 100
         y[i, 4] = len(radius_list)
 
     return preprocess_input(x), y
@@ -149,8 +149,8 @@ def summarize_diagnostics(history):
     plt.show()
     # save plot to file
     #filename = sys.argv[0].split('/')[-1]
-    #plt.savefig(filename + '_plot.png')
-    #plt.close()
+    plt.savefig('learn_plot.')
+    plt.close()
 
 def train_model():
 
@@ -173,7 +173,7 @@ def train_model():
             batch_count_per_epoch=1,
             batch_size=1000
         ),
-        epochs=30
+        epochs=10
     )
     # evaluate model
     _, acc = model.evaluate(x, y, verbose=0)
